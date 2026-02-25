@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokerCode LTD — Learn Poker the Smart Way</title>
+  <meta name="description" content="PokerCode LTD is the company behind StackXP — a Duolingo-style app that teaches poker in just 5 minutes a day.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #161616;
+      --border: #222222;
+      --gold: #c9a84c;
+      --gold-light: #e4c76b;
+      --red: #c0392b;
+      --text-primary: #f0ede6;
+      --text-secondary: #8a8680;
+      --text-muted: #5a5652;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 40px;
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 700px;
+    }
+
+    .hero h1 .accent { color: var(--gold); }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #0a0a0a;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    /* Sections */
+    section { padding: 100px 24px; }
+
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Product Section */
+    .product { background: var(--bg-secondary); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+
+    .product-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 360px;
+    }
+
+    .product-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--gold), var(--red));
+      border-radius: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-icon svg { width: 40px; height: 40px; fill: white; }
+
+    .product-visual h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .product-visual p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+
+    .feature-list li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    .feature-text h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .feature-text p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* App Store Buttons */
+    .app-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .app-btn:hover {
+      border-color: var(--text-muted);
+      background: #1a1a1a;
+    }
+
+    .app-btn svg { width: 24px; height: 24px; fill: var(--text-primary); }
+
+    .app-btn-text { text-align: left; line-height: 1.2; }
+
+    .app-btn-text small {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .app-btn-text span {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.25s;
+    }
+
+    .about-card:hover { border-color: var(--text-muted); }
+
+    .about-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .about-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--bg-secondary);
+      text-align: center;
+    }
+
+    .contact .section-subtitle { margin: 0 auto 40px; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.25s;
+    }
+
+    .contact-card:hover { border-color: var(--text-muted); }
+
+    .contact-card-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .contact-email {
+      font-size: 1.05rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .contact-email:hover { border-color: var(--gold); }
+
+    /* Footer */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--text-primary); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; }
+      .nav-links a { font-size: 0.8rem; }
+      .product-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      section { padding: 70px 20px; }
+      .hero { padding: 100px 20px 60px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .app-buttons { flex-direction: column; }
+      .nav-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="logo">Poker<span>Code</span></a>
+    <div class="nav-links">
+      <a href="#product">Product</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">Coming Soon — StackXP</div>
+    <h1>Learn Poker in <span class="accent">5 Minutes a Day</span></h1>
+    <p>StackXP is the Duolingo-style app that takes you from complete beginner to confident player through bite-sized lessons and daily drills.</p>
+    <div class="hero-buttons">
+      <a href="#product" class="btn btn-primary">Explore StackXP</a>
+      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    </div>
+  </section>
+
+  <section class="product" id="product">
+    <div class="container">
+      <div class="section-label">Our Product</div>
+      <div class="section-title">StackXP</div>
+      <p class="section-subtitle">The fun, fast way to learn poker. Bite-sized lessons, interactive drills, and a clear path from beginner to pro — launching soon on iOS and Android.</p>
+
+      <div class="product-grid">
+        <div class="product-visual">
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          </div>
+          <h3>StackXP</h3>
+          <p>Learn. Drill. Level Up.</p>
+        </div>
+
+        <div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-icon">&#9824;</div>
+              <div class="feature-text">
+                <h4>5-Minute Daily Lessons</h4>
+                <p>Short, focused sessions that fit into any schedule — learn on your commute, your break, or before bed.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">&#9830;</div>
+              <div class="feature-text">
+                <h4>Interactive Drills</h4>
+                <p>Practice real scenarios with hands-on drills that build muscle memory for the table.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">&#9829;</div>
+              <div class="feature-text">
+                <h4>Beginner to Pro Path</h4>
+                <p>A structured curriculum that takes you from the basics to advanced strategy, one level at a time.</p>
+              </div>
+            </li>
+            <li>
+              <div class="feature-icon">&#9827;</div>
+              <div class="feature-text">
+                <h4>Track Your Progress</h4>
+                <p>Streaks, XP, and skill levels keep you motivated and show how far you've come.</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="app-buttons">
+            <a href="https://apps.apple.com/app/" class="app-btn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              <div class="app-btn-text">
+                <small>Download on the</small>
+                <span>App Store</span>
+              </div>
+            </a>
+            <a href="https://play.google.com/store/apps/" class="app-btn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.18 23.76c.17.09.37.14.56.14.17 0 .33-.04.48-.12l8.4-4.79-3.2-3.21-6.24 6.24c-.18.18-.18.46-.01.64l.01.01V23.76zM.65 2.01C.24 2.39 0 2.97 0 3.7v16.59c0 .73.24 1.31.65 1.69L.7 22.03l9.14-9.14L.7 3.75.65 2.01zM21.61 10.36l-3.96-2.26-3.63 3.63 3.63 3.63 3.96-2.26c.73-.42 1.1-.95 1.1-1.59V11.32c0-.54-.37-1.07-1.1-1.49v.53zM4.22.23L16.03 6.96l-3.41 3.41L4.22.23z"/></svg>
+              <div class="app-btn-text">
+                <small>Get it on</small>
+                <span>Google Play</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About</div>
+      <div class="section-title">PokerCode LTD</div>
+      <p class="section-subtitle">We believe anyone can learn poker — it just needs the right approach.</p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Our Mission</h3>
+          <p>To make poker education accessible, engaging, and effective — no matter your experience level. Learn the game the way you'd learn a language.</p>
+        </div>
+        <div class="about-card">
+          <h3>Built by Players</h3>
+          <p>We understand the game because we play it. Every lesson and drill is designed around real situations you'll face at the table.</p>
+        </div>
+        <div class="about-card">
+          <h3>Learn by Doing</h3>
+          <p>Forget long videos and textbooks. StackXP teaches through quick, interactive exercises that make the concepts stick.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <div class="section-title">Get in Touch</div>
+      <p class="section-subtitle">Have questions, feedback, or want to collaborate? Reach the right team below.</p>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-card-label">General Enquiries</div>
+          <a href="mailto:hello@pokercode.co.uk" class="contact-email">hello@pokercode.co.uk</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-label">Support</div>
+          <a href="mailto:support@pokercode.co.uk" class="contact-email">support@pokercode.co.uk</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-label">Partnerships</div>
+          <a href="mailto:partnerships@pokercode.co.uk" class="contact-email">partnerships@pokercode.co.uk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 PokerCode LTD. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
